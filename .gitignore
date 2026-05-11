@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ML
+models/
+*.zip
+*.pkl
+*.pt
+*.pth
+*.ckpt
+runs/
+tb_logs/
+wandb/
+
+# Data — never commit clinical or potentially sensitive data
+data/clinical/
+data/dementiabank/
+data/adress/
+data/raw/
+data/synthetic/*.jsonl
+data/synthetic/*.csv
+data/public/*.pdf
+data/public/*.html
+!data/public/.gitkeep
+!data/synthetic/.gitkeep
+
+# Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Project-specific
+*.docx
+.tool-cache/
+.local-state/
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
