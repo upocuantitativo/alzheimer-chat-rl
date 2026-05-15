@@ -152,12 +152,22 @@ app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")
 
 @app.get("/", response_class=FileResponse)
 def root():
+    return FileResponse(str(STATIC / "landing.html"))
+
+
+@app.get("/app", response_class=FileResponse)
+def app_ui():
     return FileResponse(str(STATIC / "index.html"))
 
 
 @app.get("/dashboard", response_class=FileResponse)
 def dashboard():
     return FileResponse(str(STATIC / "index.html"))
+
+
+@app.get("/science", response_class=FileResponse)
+def science():
+    return FileResponse(str(STATIC / "science.html"))
 
 
 # ─── Session endpoints ────────────────────────────────────────────
@@ -334,6 +344,97 @@ def session_summary(sid: str):
 @app.get("/api/actions")
 def list_actions():
     return [{"id": a.value, "name": a.name} for a in AgentAction]
+
+
+# ─── Science / research endpoints ────────────────────────────────
+
+@app.get("/api/science/stats")
+def science_stats():
+    sessions = list(_sessions.values())
+    if not sessions:
+        return {
+            "empty": True, "n_sessions": 0, "n_turns_total": 0,
+            "silence_rate": 0, "stage_distribution": {}, "mmse_values": [],
+            "action_stats": {}, "latency_by_stage": {}, "domain_success": {},
+            "alarm_counts": {}, "avg_topic_scores": {},
+            "mood_trajectories": [], "strategy_fit_trajectories": [],
+        }
+
+    stage_counts: dict[str, int] = {}
+    mmse_values: list[float] = []
+    action_data: dict[str, dict] = {}
+    latency_by_stage: dict[str, list] = {}
+    domain_tests: dict[str, list] = {}
+    alarm_counts: dict[str, int] = {}
+    all_topic_scores: dict[str, list] = {}
+    n_turns_total = 0
+    n_silent_total = 0
+
+    for s in sessions:
+        stage_counts[s.sim.state.stage.value] = stage_counts.get(s.sim.state.stage.value, 0) + 1
+        mmse_values.append(s.sim.state.mmse)
+        n_turns_total += s.n_turns
+
+        for turn in s.transcript:
+            n_silent_total += int(turn["is_silent"])
+            an = turn["action_name"]
+            if an not in action_data:
+                action_data[an] = {"n": 0, "latencies": [], "fits": [], "successes": []}
+            action_data[an]["n"] += 1
+            action_data[an]["latencies"].append(turn["latency_s"])
+            action_data[an]["fits"].append(turn["strategy_fit"])
+            if turn["test_success"] is not None:
+                action_data[an]["successes"].append(int(turn["test_success"]))
+            t_stage = turn["patient_state"].get("stage", "UNKNOWN")
+            latency_by_stage.setdefault(t_stage, []).append(turn["latency_s"])
+            if turn["test_domain"] and turn["test_success"] is not None:
+                domain_tests.setdefault(turn["test_domain"], []).append(int(turn["test_success"]))
+            for alarm in turn["alarms"]:
+                alarm_counts[alarm] = alarm_counts.get(alarm, 0) + 1
+
+        eng = s.tracker.engagement_summary()
+        for topic, score in eng.get("topic_scores", {}).items():
+            all_topic_scores.setdefault(topic, []).append(score)
+
+    def avg(lst: list) -> float:
+        return round(sum(lst) / len(lst), 3) if lst else 0.0
+
+    return {
+        "empty": False,
+        "n_sessions": len(sessions),
+        "n_turns_total": n_turns_total,
+        "silence_rate": round(n_silent_total / n_turns_total, 3) if n_turns_total else 0,
+        "stage_distribution": stage_counts,
+        "mmse_values": mmse_values,
+        "action_stats": {
+            an: {
+                "n": d["n"],
+                "avg_latency": avg(d["latencies"]),
+                "avg_strategy_fit": avg(d["fits"]),
+                "success_rate": avg(d["successes"]) if d["successes"] else None,
+            }
+            for an, d in action_data.items()
+        },
+        "latency_by_stage": {
+            stage: {
+                "avg": avg(v),
+                "max": round(max(v), 2),
+                "silence_rate": round(sum(1 for x in v if x >= 12.0) / len(v), 3),
+            }
+            for stage, v in latency_by_stage.items()
+        },
+        "domain_success": {d: avg(v) for d, v in domain_tests.items()},
+        "alarm_counts": alarm_counts,
+        "avg_topic_scores": {t: avg(v) for t, v in all_topic_scores.items()},
+        "mood_trajectories": [
+            [t["patient_state"].get("mood", 0) for t in s.transcript]
+            for s in sessions if s.transcript
+        ],
+        "strategy_fit_trajectories": [
+            [t["strategy_fit"] for t in s.transcript]
+            for s in sessions if s.transcript
+        ],
+    }
 
 
 # ─── Helpers ──────────────────────────────────────────────────────
