@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 from ..llm import LLMClient, get_default_client
+from ..signals.latency_model import SILENCE_THRESHOLD_S, compute_latency, make_signal
 from .cognitive_state import CognitiveState, Stage
 from .interests import InterestProfile, build_random_profile
 
@@ -118,6 +119,8 @@ class PatientTurn:
     triggered_like: Optional[str] = None
     triggered_dislike: Optional[str] = None
     used_llm: bool = False
+    latency_s: float = 0.0      # simulated response latency in seconds
+    is_silent: bool = False     # True when latency >= silence threshold
 
 
 class PatientSimulator:
@@ -146,8 +149,19 @@ class PatientSimulator:
     # ----------------------------------------------------------------
     # Public API
     # ----------------------------------------------------------------
-    def reply(self, agent_utterance: str) -> PatientTurn:
-        """Receive an utterance from the agent and produce a patient reply."""
+    def reply(
+        self,
+        agent_utterance: str,
+        *,
+        is_procedural: bool = False,
+        topic_category: Optional[str] = None,
+    ) -> PatientTurn:
+        """Receive an utterance from the agent and produce a patient reply.
+
+        Args:
+            is_procedural: True for refranes / canciones (memory preserved longer).
+            topic_category: Activity category string for latency modelling.
+        """
         self.history.append(("agent", agent_utterance))
 
         triggered_like = self._detect_topic(agent_utterance, self.profile.likes)
@@ -169,17 +183,33 @@ class PatientSimulator:
         self.state.step_fatigue(+base)
         self.state.history_length += 1
 
+        # --- Simulated latency ---
+        noise = self.rng.gauss(0.0, 1.0)
+        latency_s = compute_latency(
+            self.state.stage,
+            self.state.fatigue,
+            topic_is_liked=bool(triggered_like),
+            topic_is_disliked=bool(triggered_dislike),
+            is_procedural=is_procedural,
+            noise=noise,
+        )
+        engagement = make_signal(latency_s, silence_streak=0)
+
         # Generate reply
         used_llm = False
-        if self.mode == "rules_only" or self.llm is None or self.llm.backend == "echo":
-            text = self._rule_reply(agent_utterance, triggered_like, triggered_dislike)
+        if engagement.is_silent:
+            # Patient too fatigued / disengaged to respond meaningfully
+            text = self._template("dont_remember", self.language)
+        elif self.mode == "rules_only" or self.llm is None or self.llm.backend == "echo":
+            text = self._rule_reply(agent_utterance, triggered_like, triggered_dislike,
+                                    is_procedural=is_procedural)
         else:
             try:
                 text = self._llm_reply(agent_utterance)
                 used_llm = True
             except Exception:
-                # Soft fallback: do not break the simulation on LLM outage.
-                text = self._rule_reply(agent_utterance, triggered_like, triggered_dislike)
+                text = self._rule_reply(agent_utterance, triggered_like, triggered_dislike,
+                                        is_procedural=is_procedural)
 
         if self.mode != "llm_only":
             text = self._inject_stage_phenomena(text)
@@ -191,6 +221,8 @@ class PatientSimulator:
             triggered_like=triggered_like,
             triggered_dislike=triggered_dislike,
             used_llm=used_llm,
+            latency_s=round(latency_s, 1),
+            is_silent=engagement.is_silent,
         )
 
     # ----------------------------------------------------------------
@@ -248,6 +280,8 @@ class PatientSimulator:
         agent_utterance: str,
         triggered_like: Optional[str],
         triggered_dislike: Optional[str],
+        *,
+        is_procedural: bool = False,
     ) -> str:
         L = self.language
         stage = self.state.stage
@@ -258,11 +292,22 @@ class PatientSimulator:
         if triggered_like:
             return self._template("warm", L).format(topic=triggered_like)
 
+        # Procedural memory (refranes / canciones) — preserved much longer in AD
+        if is_procedural:
+            success_prob = {
+                Stage.HEALTHY: 0.95,
+                Stage.MCI: 0.90,
+                Stage.MILD_AD: 0.80,
+                Stage.MODERATE_AD: 0.65,
+                Stage.SEVERE_AD: 0.35,
+            }[stage]
+            if self.rng.random() < success_prob:
+                return self._template("procedural_success", L)
+            return self._template("procedural_fail", L)
+
         if "?" in agent_utterance:
             if stage in (Stage.MODERATE_AD, Stage.SEVERE_AD):
-                return self.rng.choice(
-                    self._templates("dont_remember", L)
-                )
+                return self.rng.choice(self._templates("dont_remember", L))
             return self.rng.choice(self._templates("doubtful_answer", L))
 
         return self.rng.choice(self._templates("neutral", L))
@@ -271,6 +316,17 @@ class PatientSimulator:
     def _templates(key: str, lang: str) -> list[str]:
         bank = {
             "es": {
+                "procedural_success": [
+                    "¡Eso lo sé yo! Sí, sí, lo recuerdo bien.",
+                    "¡Claro que sí! Eso siempre se me ha quedado.",
+                    "¡Cómo no! Eso lo decía mi madre siempre.",
+                    "¡Eso sí que lo sé! Me lo enseñaron de pequeña.",
+                ],
+                "procedural_fail": [
+                    "Ay... se me fue... lo tengo en la punta de la lengua.",
+                    "Sé que lo sé, pero ahora mismo no me sale.",
+                    "Me suena mucho, pero no consigo recordarlo ahora.",
+                ],
                 "evade": ["Ay, no... mejor hablamos de otra cosa.",
                           "Eso... no me gusta acordarme. ¿Y tú qué tal?",
                           "Prefiero no hablar de eso ahora."],
@@ -286,6 +342,15 @@ class PatientSimulator:
                 "neutral": ["Vale.", "Ya.", "Mmm.", "Sí, sí.", "Entiendo."],
             },
             "en": {
+                "procedural_success": [
+                    "Of course! I know that one!",
+                    "Yes, yes, I remember that well.",
+                    "My mother used to say that!",
+                ],
+                "procedural_fail": [
+                    "Oh... it's on the tip of my tongue...",
+                    "I know it, I just can't get it right now.",
+                ],
                 "evade": ["Oh... let's talk about something else.",
                           "I'd rather not... how have you been?",
                           "Not today, please."],

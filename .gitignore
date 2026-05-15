@@ -37,6 +37,7 @@ wandb/
 
 # Data — never commit clinical or potentially sensitive data
 data/rag_index/
+data/local_knowledge_cache/
 data/clinical/
 data/dementiabank/
 data/adress/

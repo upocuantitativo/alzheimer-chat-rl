@@ -1,0 +1,392 @@
+{
+  "madrid": {
+    "city": "Madrid", "region": "Comunidad de Madrid",
+    "dishes": ["cocido madrileño", "callos a la madrileña", "bocadillo de calamares", "churros con chocolate", "rosquillas de San Isidro"],
+    "festivals": ["San Isidro (mayo)", "Verbenas del verano", "La Almudena (noviembre)", "Fiestas de La Paloma"],
+    "football_team": "Real Madrid / Atlético de Madrid",
+    "songs": ["Chotis madrileño", "El sereno", "En er mundo", "Pichi"],
+    "famous_people": ["Velázquez", "Goya", "Lope de Vega", "Francisco de Quevedo", "Manolo Escobar"],
+    "sayings": ["De Madrid al cielo", "El que no llora no mama", "A las duras y a las maduras"],
+    "historical_facts": ["La Gran Vía inaugurada en 1931", "Los tranvías madrileños", "El metro de Madrid (1919)", "El Retiro, parque de los madrileños"],
+    "era_facts": {
+      "1950s": ["El racionamiento de posguerra", "Los tranvías eléctricos", "Barrios obreros de Vallecas y Carabanchel", "Las verbenas de barrio"],
+      "1960s": ["El desarrollismo franquista", "Migración del campo a Madrid", "La SEAT 600", "Los primeros electrodomésticos"],
+      "1970s": ["La Transición democrática", "La primera discoteca", "El fútbol en la tele en blanco y negro", "Los pisos del Plan de Estabilización"]
+    }
+  },
+  "barcelona": {
+    "city": "Barcelona", "region": "Cataluña",
+    "dishes": ["pa amb tomàquet", "fideuà", "escalivada", "crema catalana", "botifarra amb mongetes"],
+    "festivals": ["La Mercè (septiembre)", "Sant Jordi (abril)", "Fiestas de Gràcia", "Carnaval de Sitges"],
+    "football_team": "FC Barcelona",
+    "songs": ["El cant dels ocells", "La Santa Espina", "Montserrat", "Sardana"],
+    "famous_people": ["Antoni Gaudí", "Joan Miró", "Salvador Dalí", "Joan Manuel Serrat", "Montserrat Caballé"],
+    "sayings": ["Barça és més que un club", "Seny i rauxa", "Fes el que vulguis"],
+    "historical_facts": ["La Sagrada Família (desde 1882)", "Las Ramblas", "La Barcelona de posguerra", "Los Juegos Olímpicos del 92"],
+    "era_facts": {
+      "1950s": ["La Barcelona obrera del Poble Nou", "La Nova Cançó catalana", "Los chicos del barrio en el campo de fútbol"],
+      "1960s": ["La inmigración andaluza y murciana", "El turismo en la Costa Brava", "El boom industrial"],
+      "1970s": ["La lucha por la autonomía", "La Transición", "El Barça como símbolo de catalanidad"]
+    }
+  },
+  "sevilla": {
+    "city": "Sevilla", "region": "Andalucía",
+    "dishes": ["gazpacho", "salmorejo", "pescaíto frito", "tapas de jamón", "torrijas", "espinacas con garbanzos"],
+    "festivals": ["Feria de Abril", "Semana Santa", "El Rocío", "Corpus Christi"],
+    "football_team": "Sevilla FC / Real Betis Balompié",
+    "songs": ["Sevillanas", "Giralda", "La bien pagá", "Pena penita pena"],
+    "famous_people": ["Velázquez (nacido en Sevilla)", "Murillo", "Antonio Machado", "Camarón de la Isla", "Paco de Lucía"],
+    "sayings": ["Sevilla tiene una color especial", "En Sevilla no hay mal tiempo", "El que no ha visto Sevilla no ha visto maravilla"],
+    "historical_facts": ["La Giralda", "La Torre del Oro", "El barrio de Triana", "La Exposición Universal de 1929"],
+    "era_facts": {
+      "1950s": ["La Semana Santa de los años 50", "Las tabernas de Triana", "El flamenco en los patios"],
+      "1960s": ["El turismo y la apertura", "Las colas del agua", "Las casetas de la Feria"],
+      "1970s": ["Los cambios en la Semana Santa", "Los primeros pisos nuevos", "La Televisión Española llega a los bares"]
+    }
+  },
+  "valencia": {
+    "city": "Valencia", "region": "Comunidad Valenciana",
+    "dishes": ["paella valenciana", "fideuà", "arròs al forn", "horchata con fartons", "agua de Valencia", "buñuelos"],
+    "festivals": ["Las Fallas (marzo)", "La Tomatina de Buñol", "Moros y Cristianos de Alcoy"],
+    "football_team": "Valencia CF / Villarreal CF",
+    "songs": ["Al tall", "Cant de la senyera", "La Balanguera", "Albaes valencianas"],
+    "famous_people": ["Blasco Ibáñez", "Sorolla", "Artur Aparici", "Ricardo Tormo"],
+    "sayings": ["Veles e vents", "Bon profit!", "És el que hi ha"],
+    "historical_facts": ["La Lonja de la Seda (siglo XV)", "Las Fallas desde el siglo XV", "La Albufera", "El puerto de Valencia"],
+    "era_facts": {
+      "1950s": ["Las barracas de la huerta", "El tranvía valenciano", "La naranja, orgullo de Valencia"],
+      "1960s": ["El turismo en Gandía y Cullera", "El crecimiento industrial", "Las primeras fallas de postguerra recuperadas"],
+      "1970s": ["La lucha por la autonomía valenciana", "Las riadas del Turia (1957 todavía recordada)", "Los primeros pisos de nueva planta"]
+    }
+  },
+  "zaragoza": {
+    "city": "Zaragoza", "region": "Aragón",
+    "dishes": ["migas aragonesas", "ternasco de Aragón", "boliches con jamón", "frutas de Aragón", "borrajas"],
+    "festivals": ["El Pilar (octubre)", "Las Fiestas del Pilar", "Semana Santa"],
+    "football_team": "Real Zaragoza",
+    "songs": ["La Jota aragonesa", "El Pastorcillo", "A la jota jota"],
+    "famous_people": ["Francisco de Goya (Fuendetodos, Aragón)", "Ramón y Cajal", "Luis Buñuel", "La Virgen del Pilar"],
+    "sayings": ["Quién bien te quiere te hará llorar", "A lo hecho, pecho", "Agua que no has de beber, déjala correr"],
+    "historical_facts": ["La Basílica del Pilar", "Los Sitios de Zaragoza (1808)", "El Canal Imperial de Aragón", "El Ebro a su paso por Zaragoza"],
+    "era_facts": {
+      "1950s": ["Las ferias del Pilar de posguerra", "La Jota en los coros parroquiales", "El campo de Aragón y la sequía"],
+      "1960s": ["La industrialización de Zaragoza", "La General Motors y las fábricas", "Los primeros televisores"],
+      "1970s": ["El Real Zaragoza en Primera División", "La Transición en Aragón", "El éxodo rural"]
+    }
+  },
+  "bilbao": {
+    "city": "Bilbao", "region": "País Vasco",
+    "dishes": ["pintxos", "bacalao al pil-pil", "marmitako", "angulas", "kokotxas"],
+    "festivals": ["Semana Grande (agosto)", "Aste Nagusia", "San Mamés"],
+    "football_team": "Athletic Club de Bilbao",
+    "songs": ["Agur Jaunak", "Txoria txori", "Euskal Herria"],
+    "famous_people": ["Miguel de Unamuno", "Chillida", "Oteiza", "Telesforo Monzón"],
+    "sayings": ["Hemen gaude", "Biba Bilbao", "Nire aitaren etxea"],
+    "historical_facts": ["El Guggenheim (1997)", "La Ría de Bilbao", "El Athletic, solo jugadores vascos", "Los Altos Hornos de Vizcaya"],
+    "era_facts": {
+      "1950s": ["Los Altos Hornos y la industria siderúrgica", "El puerto y los barcos", "Los mineros de Vizcaya"],
+      "1960s": ["El boom industrial vasco", "El movimiento obrero", "Las primeras huelgas"],
+      "1970s": ["La Transición y el movimiento vasco", "El Athletic de Bilbao campeón de liga", "La reconversión industrial"]
+    }
+  },
+  "malaga": {
+    "city": "Málaga", "region": "Andalucía",
+    "dishes": ["espetos de sardinas", "gazpacho malagueño", "fritura malagueña", "ajoblanco", "bienmesabe"],
+    "festivals": ["Semana Santa", "Feria de Agosto", "Verdiales"],
+    "football_team": "Málaga CF",
+    "songs": ["Malagueña salerosa", "Verdiales", "Los caracoles", "La Caramba"],
+    "famous_people": ["Pablo Picasso (nacido en Málaga)", "Antonio Banderas", "Bisbal (Almería pero popular en Málaga)"],
+    "sayings": ["¡Viva Málaga, granaína!", "En Málaga, sol y playa", "Ser más bueno que el pan"],
+    "historical_facts": ["El Caminito del Rey", "La Alcazaba de Málaga", "El puerto de Málaga", "La Semana Santa más famosa de Andalucía oriental"],
+    "era_facts": {
+      "1950s": ["Los pescadores de El Palo y Pedregalejo", "Los espetos en la playa", "La miseria de la posguerra en la Costa del Sol"],
+      "1960s": ["El turismo masivo en la Costa del Sol", "El aeropuerto de Málaga", "Los primeros hoteles en Torremolinos"],
+      "1970s": ["La transformación turística", "Los inmigrantes del norte de Europa", "Los chiringuitos"]
+    }
+  },
+  "granada": {
+    "city": "Granada", "region": "Andalucía",
+    "dishes": ["remojón granadino", "habas con jamón", "plato alpujarreño", "berenjenas con miel", "pionono de Santa Fe"],
+    "festivals": ["Semana Santa", "Corpus Christi", "Noche en Blanco"],
+    "football_team": "Granada CF",
+    "songs": ["Granada (Agustín Lara)", "Zorongo gitano", "Romance de la luna luna"],
+    "famous_people": ["Federico García Lorca (Fuente Vaqueros, Granada)", "Manuel de Falla", "Ayala", "Ibn Battuta"],
+    "sayings": ["Dale limosna, mujer, que no hay en la vida nada como la pena de ser ciego en Granada", "Granada, tierra de contrastes"],
+    "historical_facts": ["La Alhambra", "El Generalife", "La Capilla Real", "El barrio del Albaicín"],
+    "era_facts": {
+      "1950s": ["Los estudiantes de la Universidad de Granada", "La Alhambra como orgullo", "La nieve de Sierra Nevada"],
+      "1960s": ["Los primeros turistas en la Alhambra", "El esquí en Sierra Nevada", "La ciudad universitaria"],
+      "1970s": ["La memoria de Lorca", "Los gitanos del Sacromonte", "La Transición en Granada"]
+    }
+  },
+  "cordoba": {
+    "city": "Córdoba", "region": "Andalucía",
+    "dishes": ["salmorejo cordobés", "flamenquín cordobés", "rabo de toro", "berenjenas con miel", "mazamorra"],
+    "festivals": ["Feria de Mayo", "Festival de los Patios (mayo)", "Semana Santa"],
+    "football_team": "Córdoba CF",
+    "songs": ["Sevillanas cordobesas", "El guitarrico", "Copla cordobesa"],
+    "famous_people": ["Séneca (nacido en Córdoba)", "Averroes", "Maimónides", "Manolete (el torero)"],
+    "sayings": ["Córdoba, la sultana de Andalucía", "Quien no ha visto Córdoba no ha visto nada"],
+    "historical_facts": ["La Mezquita-Catedral de Córdoba", "El Califato de Córdoba", "La judería medieval", "Los patios cordobeses"],
+    "era_facts": {
+      "1950s": ["La posguerra en los patios de vecinos", "Los olivares y el aceite", "Manolete, el torero cordobés recordado"],
+      "1960s": ["El turismo en la Mezquita", "La semana santa cordobesa", "El campo andaluz y la emigración"],
+      "1970s": ["La democratización", "Los primeros turistas en los Patios", "La industria cordobesa del cuero"]
+    }
+  },
+  "cadiz": {
+    "city": "Cádiz", "region": "Andalucía",
+    "dishes": ["tortillitas de camarones", "papas aliñás", "chipirones", "atún de almadraba", "bienmesabe gaditano"],
+    "festivals": ["Carnaval de Cádiz (febrero)", "Feria de Cádiz", "Semana Santa"],
+    "football_team": "Cádiz CF",
+    "songs": ["Chirigotas del Carnaval", "Cádiz mi vida", "El color de tu mirada", "Copla gaditana"],
+    "famous_people": ["Las Chirigotas del Carnaval", "José María Pemán", "Camarón de la Isla (La Línea)"],
+    "sayings": ["Cádiz la tacita de plata", "Gaditano y orgulloso", "¡Eso es Cádiz!"],
+    "historical_facts": ["La Constitución de 1812", "El Carnaval más antiguo de España", "La Bahía de Cádiz", "Las Cortes de Cádiz"],
+    "era_facts": {
+      "1950s": ["Los pescadores de la bahía", "El Carnaval prohibido por Franco y las coplas clandestinas", "La industria naval de La Carraca"],
+      "1960s": ["El turismo en la Costa de la Luz", "Las conservas de atún", "Los años del hambre ya superados"],
+      "1970s": ["La recuperación del Carnaval oficial", "La industria del astillero", "Los marineros gaditanos"]
+    }
+  },
+  "salamanca": {
+    "city": "Salamanca", "region": "Castilla y León",
+    "dishes": ["hornazo de Salamanca", "farinato", "chanfaina", "jamón ibérico de Guijuelo", "torrijas"],
+    "festivals": ["Semana Santa", "Fiestas de San Juan (junio)", "Festival de Folclore"],
+    "football_team": "Unión Deportiva Salamanca",
+    "songs": ["Charros", "Cantos de boda salmantinos", "La loba parda"],
+    "famous_people": ["Miguel de Unamuno (rector de la Universidad)", "Santa Teresa (Ávila, próxima)", "Luis de León", "Tormes"],
+    "sayings": ["Lo que natura no da, Salamanca no lo presta", "En Salamanca todo es universitario"],
+    "historical_facts": ["La Universidad de Salamanca (1218)", "La Plaza Mayor", "La Casa de las Conchas", "El río Tormes"],
+    "era_facts": {
+      "1950s": ["La Universidad llena de estudiantes de posguerra", "Los estudiantes de teología y derecho", "El campo castellano y la parquedad"],
+      "1960s": ["Los jóvenes universitarios y el franquismo", "Las tabernas estudiantiles", "El desarrollo rural de Castilla"],
+      "1970s": ["La Transición en la Universidad", "Los primeros partidos políticos clandestinos", "El charro y la tradición"]
+    }
+  },
+  "valladolid": {
+    "city": "Valladolid", "region": "Castilla y León",
+    "dishes": ["lechazo asado", "tostón asado", "lechugas con vinagre", "queso de Burgos", "tierra de vino Ribera del Duero"],
+    "festivals": ["Semana Santa (la más importante de Castilla)", "Feria de Septiembre", "Valladolid en el Mundo"],
+    "football_team": "Real Valladolid",
+    "songs": ["Jotas castellanas", "Canciones de vendimia"],
+    "famous_people": ["Cervantes (vivió en Valladolid)", "Zorrilla (El Tenorio)", "Colón (murió en Valladolid)", "Felipe II (nacido en Valladolid)"],
+    "sayings": ["Valladolid, pucela", "En Castilla, el que no trabaja no come"],
+    "historical_facts": ["Capital del Imperio Español", "La Semana Santa más solemne", "El Pisuerga", "Los museos de escultura"],
+    "era_facts": {
+      "1950s": ["La industria y los talleres", "La semana santa y las procesiones", "El campo de Castilla y las heladas"],
+      "1960s": ["La FASA-Renault (fábrica de coches)", "El crecimiento industrial", "Los obreros de la factoría"],
+      "1970s": ["La Transición política en Castilla", "Los jóvenes en la fábrica de FASA", "El vino de la Ribera del Duero"]
+    }
+  },
+  "vigo": {
+    "city": "Vigo", "region": "Galicia",
+    "dishes": ["pulpo á feira", "empanada gallega", "caldo gallego", "pimientos de padrón", "percebes", "mejillones"],
+    "festivals": ["Reconquista de Vigo", "Fiestas del Cristo", "El Marisco (O Grove cercano)"],
+    "football_team": "RC Celta de Vigo",
+    "songs": ["Muñeira", "Alalá", "Negra sombra", "El himno gallego"],
+    "famous_people": ["Castelao", "Cunqueiro", "Julio Iglesias (Madrid, pero icono gallego)", "Alfonso Daniel Rodríguez Castelao"],
+    "sayings": ["Galicia, morriña y mar", "Non hai mal que por ben non veña", "O mar de Vigo"],
+    "historical_facts": ["El puerto de Vigo (uno de los más activos de España)", "La ría de Vigo", "El Celta como orgullo gallego", "Las conservas de pescado"],
+    "era_facts": {
+      "1950s": ["La pesca en la ría", "Los marineros y las conserveras", "La morriña de los emigrantes a América"],
+      "1960s": ["El crecimiento del puerto", "La industria conservera", "La emigración a Europa (Alemania, Suiza)"],
+      "1970s": ["El regreso de los emigrantes", "El Celta en las décadas oscuras", "La Galicia que se moderniza"]
+    }
+  },
+  "a_coruña": {
+    "city": "A Coruña", "region": "Galicia",
+    "dishes": ["pulpo á feira", "lacón con grelos", "percebes", "berberechos", "vieiras", "tarta de Santiago"],
+    "festivals": ["Las Hogueras de San Juan", "Fiestas de María Pita", "Carnaval"],
+    "football_team": "Deportivo de La Coruña",
+    "songs": ["Muñeira", "Alalá", "O pino", "Negra sombra"],
+    "famous_people": ["María Pita (heroína)", "Picasso (vivió en A Coruña de niño)", "Alfonso Daniel Castelao"],
+    "sayings": ["A Coruña, ciudad de cristal", "La Torre de Hércules mira al mar"],
+    "historical_facts": ["La Torre de Hércules (faro romano)", "La ciudad de cristal (galerías)", "El Deportivo de los años 90", "El Atlántico y la lluvia"],
+    "era_facts": {
+      "1950s": ["Los marineros y los astilleros", "La lluvia y el viento atlántico", "Las conserveras de bacalao"],
+      "1960s": ["El boom de la construcción", "Los veraneantes madrileños", "La industria pesquera"],
+      "1970s": ["El Deportivo de La Coruña y las ilusiones", "La emigración controlada", "El turismo en la Ría"]
+    }
+  },
+  "oviedo": {
+    "city": "Oviedo", "region": "Asturias",
+    "dishes": ["fabada asturiana", "cachopo", "pote asturiano", "callos asturianos", "sidra asturiana", "queso de Cabrales"],
+    "festivals": ["San Mateo (septiembre)", "La Sidra de Nava", "Semana Santa"],
+    "football_team": "Real Oviedo / Sporting de Gijón",
+    "songs": ["Asturias, patria querida", "El llangostín", "Canción de cuna asturiana"],
+    "famous_people": ["Leopoldo Alas 'Clarín'", "Jovellanos", "Campoamor", "Joaquín Costa"],
+    "sayings": ["Asturias, paraíso natural", "La sidra y la fabada son el alma de Asturias"],
+    "historical_facts": ["La Catedral de Oviedo", "La Revolución de Octubre de 1934", "Los mineros de Asturias", "El Camino de Santiago"],
+    "era_facts": {
+      "1950s": ["Los mineros del carbón en las cuencas", "La sidra en los chigres", "La posguerra asturiana"],
+      "1960s": ["Las huelgas mineras", "La HUNOSA y la minería estatal", "El turismo en la costa asturiana"],
+      "1970s": ["La reconversión minera empieza", "El movimiento obrero asturiano", "La democracia llega a las cuencas"]
+    }
+  },
+  "murcia": {
+    "city": "Murcia", "region": "Región de Murcia",
+    "dishes": ["zarangollo murciano", "pastel de carne murciano", "caldero del Mar Menor", "paparajotes", "pisto murciano"],
+    "festivals": ["Bando de la Huerta (abril)", "Semana Santa (conocida por sus pasos)", "Feria de Murcia"],
+    "football_team": "Real Murcia / FC Cartagena",
+    "songs": ["El pañico murciano", "Jota murciana", "La huerta de Murcia"],
+    "famous_people": ["Salzillo (escultor)", "Isaac Peral (inventor del submarino)"],
+    "sayings": ["La huerta de Murcia, vergel de España", "Murciano y orgulloso"],
+    "historical_facts": ["La Catedral de Murcia", "La Huerta de Murcia", "Isaac Peral y el submarino", "El Mar Menor"],
+    "era_facts": {
+      "1950s": ["La huerta y el trabajo del campo", "Los frutales y las hortalizas", "El sol y las cosechas"],
+      "1960s": ["El turismo en el Mar Menor", "La industria conservera", "Los 'pimentoneros'"],
+      "1970s": ["El trasvase Tajo-Segura", "La emigración a Cataluña y País Vasco controlada", "El Murcia en la liga"]
+    }
+  },
+  "alicante": {
+    "city": "Alicante", "region": "Comunidad Valenciana",
+    "dishes": ["arroz a banda", "gamba roja de Denia", "turrón de Jijona y Alicante", "olla alicantina", "coca amb tramponçades"],
+    "festivals": ["Hogueras de San Juan (junio)", "Moros y Cristianos de Alcoy", "Fiestas de la Virgen del Remedio"],
+    "football_team": "Hércules CF / Elche CF",
+    "songs": ["La rondalla alicantina", "Hogueras, hogueras", "Canciones de Moros y Cristianos"],
+    "famous_people": ["Gabriel Miró", "Jorge Juan", "Oscar Esplá (músico)"],
+    "sayings": ["Alicante, terra de llum", "El sol de Alicante calienta más"],
+    "historical_facts": ["El Castillo de Santa Bárbara", "El turrón de Jijona", "Las Hogueras y las mascletàs", "La palma de Elche"],
+    "era_facts": {
+      "1950s": ["Los pescadores de la costa", "El turrón, trabajo de temporada", "Los primeros veraneantes"],
+      "1960s": ["El boom turístico de Benidorm", "Los hoteles en la Costa Blanca", "Los ingleses en la playa"],
+      "1970s": ["Benidorm, símbolo del turismo de masas", "La urbanización de la costa", "El turrón de Navidad en toda España"]
+    }
+  },
+  "pamplona": {
+    "city": "Pamplona", "region": "Navarra",
+    "dishes": ["chistorra navarra", "pimientos del piquillo rellenos", "trucha a la navarra", "espárragos de Navarra", "migas de pastor"],
+    "festivals": ["San Fermín (julio)", "El Encierro de los toros", "Semana Santa"],
+    "football_team": "CA Osasuna",
+    "songs": ["Uno de enero, dos de febrero... (San Fermín)", "Jota navarra", "El Vito"],
+    "famous_people": ["Hemingway (amante de Pamplona)", "Ignacio de Loyola (Azpeitia, Guipúzcoa, relacionado con Navarra)", "El rey Sancho III"],
+    "sayings": ["San Fermín, uno de enero, dos de febrero...", "A Pamplona hemos de ir", "Por San Fermín, todos a bailar"],
+    "historical_facts": ["El Camino de Santiago por Navarra", "El Encierro de los toros desde el siglo XVI", "El Palacio Real de Olite", "Las murallas de Pamplona"],
+    "era_facts": {
+      "1950s": ["El Encierro retomado con fuerza", "La industria conservera navarra", "El campo navarro y la remolacha"],
+      "1960s": ["Los primeros turistas extranjeros en San Fermín", "Hemingway y su novela El sol también sale", "La industrialización de Pamplona"],
+      "1970s": ["Los sanfermines y el movimiento de libertades", "El Osasuna en Primera División", "La Transición en Navarra"]
+    }
+  },
+  "logrono": {
+    "city": "Logroño", "region": "La Rioja",
+    "dishes": ["pimientos asados de La Rioja", "patatas a la riojana", "chuletillas de cordero al sarmiento", "pochas con chorizo", "vino Rioja con el pintxo"],
+    "festivals": ["San Mateo (septiembre)", "La vendimia", "Fiestas de la Rioja"],
+    "football_team": "UD Logroñés",
+    "songs": ["Jotas riojanas", "Canciones de vendimia"],
+    "famous_people": ["Espartero", "Bretón de los Herreros", "Fray Domingo de Guzmán (cerca de La Rioja)"],
+    "sayings": ["La Rioja, tierra de vinos", "Sin vino no hay alegría en La Rioja"],
+    "historical_facts": ["La Ruta de los Vinos de La Rioja", "El Camino de Santiago por Logroño", "Las bodegas centenarias", "El monasterio de Yuso y Suso"],
+    "era_facts": {
+      "1950s": ["La vendimia a mano", "Las cooperativas de vino", "El campo riojano y la posguerra"],
+      "1960s": ["Los primeros tractores en la vendimia", "El Rioja se exporta", "Las primeras bodegas modernas"],
+      "1970s": ["La Denominación de Origen Rioja", "El vino Rioja conquista España", "Los jornaleros de la vendimia"]
+    }
+  },
+  "santander": {
+    "city": "Santander", "region": "Cantabria",
+    "dishes": ["cocido montañés", "rabas de calamar", "anchoas del Cantábrico", "sobaos y quesadas", "cocido de alubias con berza"],
+    "festivals": ["Festival Internacional de Santander (agosto)", "La Semana Grande", "Carnaval de Santoña"],
+    "football_team": "Racing de Santander",
+    "songs": ["Ay, mi Cantabria", "Jotas montañesas", "El Tino Barquín"],
+    "famous_people": ["José María de Pereda", "Menéndez Pelayo", "El Marqués de Santillana"],
+    "sayings": ["Cantabria, la cuna de los cántabros", "La mar y la montaña"],
+    "historical_facts": ["La Cueva de Altamira", "El Palacio de la Magdalena", "Las anchovas de Santoña", "El Sardinero"],
+    "era_facts": {
+      "1950s": ["Los veraneantes del interior en el Sardinero", "Las anchoas artesanales", "El Racing en la División de Honor"],
+      "1960s": ["El turismo de verano", "La Cueva de Altamira ya famosa", "Los quesadas y los sobaos para todos"],
+      "1970s": ["La modernización de Santander", "El Festival de Santander", "El Racing en apuros"]
+    }
+  },
+  "huelva": {
+    "city": "Huelva", "region": "Andalucía",
+    "dishes": ["jamón de Jabugo (Huelva)", "coquinas con limón", "cazuela de almejas", "frito huelveño", "fresas de Huelva"],
+    "festivals": ["La Romería del Rocío (Almonte)", "Colombinas (agosto)", "Semana Santa"],
+    "football_team": "Recreativo de Huelva (el equipo más antiguo de España, 1889)",
+    "songs": ["Sevillanas rocieras", "El Rocío", "Coplas de corro"],
+    "famous_people": ["Colón (llegó a América desde Huelva, Palos de la Frontera)", "Juan Ramón Jiménez (Moguer)", "Blas Infante"],
+    "sayings": ["Huelva, tierra de Colón y el Rocío", "De Huelva a América, el primer paso"],
+    "historical_facts": ["La Rábida, donde Colón preparó su viaje", "El Rocío, la devoción más multitudinaria de España", "Las minas de Riotinto", "Juan Ramón Jiménez, Premio Nobel"],
+    "era_facts": {
+      "1950s": ["Las minas de Riotinto y los mineros", "Las fresas empiezan a cultivarse", "El Rocío clandestino"],
+      "1960s": ["El polo de desarrollo industrial de Huelva", "Las refinerías", "El turismo en Punta Umbría"],
+      "1970s": ["La contaminación de las minas", "El Rocío ya masivo", "Juan Ramón Jiménez recordado"]
+    }
+  },
+  "almeria": {
+    "city": "Almería", "region": "Andalucía",
+    "dishes": ["gurullos con conejo", "ajoblanco almeriense", "tabernero (melón con jamón)", "gambas de Garrucha", "ajo colorao"],
+    "festivals": ["Feria de Almería (agosto)", "Semana Santa", "Fiestas de la Virgen del Mar"],
+    "football_team": "UD Almería",
+    "songs": ["Parranda almeriense", "Taranta y minera (cante jondo)"],
+    "famous_people": ["Boabdil (último sultán de Granada, huído a Almería)", "Indalo (símbolo prehistórico)", "Franz Borkenau"],
+    "sayings": ["Almería, tierra de sol y arena", "Indaliano y orgulloso"],
+    "historical_facts": ["La Alcazaba de Almería", "Los westerns de Hollywood rodados en Almería", "El invernadero de plástico", "Las minas de Almería"],
+    "era_facts": {
+      "1950s": ["Las minas de hierro y los mineros", "La pobreza de la posguerra almeriense", "La emigración masiva"],
+      "1960s": ["Los rodajes de spaghetti westerns (Sergio Leone)", "Los primeros invernaderos", "Clint Eastwood por Almería"],
+      "1970s": ["La revolución agrícola de los invernaderos", "Los pimientos y los tomates para Europa", "El turismo de Mojácar"]
+    }
+  },
+  "toledo": {
+    "city": "Toledo", "region": "Castilla-La Mancha",
+    "dishes": ["carcamusa toledana", "perdiz a la toledana", "mazapán de Toledo", "migas manchegas", "cochifrito"],
+    "festivals": ["Corpus Christi (el más famoso de España)", "Semana Santa", "Feria de Toledo"],
+    "football_team": "CD Toledo",
+    "songs": ["Jotas manchegas", "El manchego"],
+    "famous_people": ["El Greco (vivió en Toledo)", "Alfonso X el Sabio", "Garcilaso de la Vega"],
+    "sayings": ["Toledo, ciudad de tres culturas", "El mazapán de Toledo es el mejor del mundo"],
+    "historical_facts": ["El Alcázar de Toledo", "La Catedral Primada", "Ciudad de las tres culturas (cristiana, judía, musulmana)", "El Greco y su museo"],
+    "era_facts": {
+      "1950s": ["La posguerra en la ciudad imperial", "El Alcázar como símbolo franquista", "Los artesanos de la damasquinería"],
+      "1960s": ["El turismo histórico-artístico", "Los soldados del Alcázar recordados", "Las espadas de Toledo para los turistas"],
+      "1970s": ["La ciudad museo", "El mazapán de Navidad en toda España", "La artesanía toledana"]
+    }
+  },
+  "leon": {
+    "city": "León", "region": "Castilla y León",
+    "dishes": ["cecina de León", "botillo del Bierzo", "lacón con cachelos", "embutidos leoneses", "fabada leonesa"],
+    "festivals": ["San Juan y San Pedro (junio)", "Semana Santa", "La Vaquilla de Astorga"],
+    "football_team": "Cultural Leonesa / Deportivo de León",
+    "songs": ["Jotas leonesas", "Canciones del Camino de Santiago"],
+    "famous_people": ["Guzmán el Bueno", "El Cid Campeador (relacionado con Castilla y León)", "San Isidoro de Sevilla (enterrado en León)"],
+    "sayings": ["León, ciudad de la Pulchra Leonina", "La catedral de León y sus vidrieras"],
+    "historical_facts": ["La Catedral de León y sus vidrieras góticas", "El Camino de Santiago por León", "Los Reyes de León y Castilla", "La Colegiata de San Isidoro"],
+    "era_facts": {
+      "1950s": ["Los mineros del Bierzo", "La posguerra en la meseta castellana", "La cecina y los embutidos de temporada"],
+      "1960s": ["La minería del carbón en El Bierzo", "Los estudiantes del Seminario", "El Camino de Santiago redescubierto"],
+      "1970s": ["La reconversión minera", "El Camino de Santiago como turismo", "La Transición en Castilla y León"]
+    }
+  },
+  "badajoz": {
+    "city": "Badajoz", "region": "Extremadura",
+    "dishes": ["migas extremeñas", "caldereta extremeña", "jamón ibérico de bellota (Dehesa)", "morcilla de calabaza", "pitarra (vino extremeño)"],
+    "festivals": ["Carnaval de Badajoz (el más importante del suroeste)", "Feria de San Juan", "Semana Santa"],
+    "football_team": "CD Badajoz",
+    "songs": ["Coplas de Carnaval de Badajoz", "Jotas extremeñas", "Canciones de la dehesa"],
+    "famous_people": ["Zurbarán (Fuente de Cantos, Badajoz)", "Hernán Cortés (Medellín, Badajoz)", "Francisco Pizarro (Trujillo, Cáceres, relacionado)"],
+    "sayings": ["Extremadura, tierra de conquistadores", "La dehesa extremeña y el cerdo ibérico"],
+    "historical_facts": ["Los conquistadores de América (Hernán Cortés, Pizarro)", "La Alcazaba de Badajoz", "La dehesa ibérica", "El Carnaval centenario"],
+    "era_facts": {
+      "1950s": ["La emigración extremeña a Cataluña y el País Vasco", "La dehesa y los jornaleros", "La pobreza de la posguerra en Extremadura"],
+      "1960s": ["La emigración masiva a Alemania y Suiza", "Los planes de colonización del franquismo (Vegas del Guadiana)", "El recuerdo de los que se fueron"],
+      "1970s": ["El regreso de emigrantes", "El jamón ibérico como símbolo", "La Transición en Extremadura"]
+    }
+  },
+  "caceres": {
+    "city": "Cáceres", "region": "Extremadura",
+    "dishes": ["torta del Casar", "cordero al ajillo extremeño", "gazpacho extremeño (diferente al andaluz)", "patatas revolconas", "cañamones"],
+    "festivals": ["WOMAD (World of Music)", "Semana Santa", "Festival de Cine de Cáceres"],
+    "football_team": "CD Cáceres",
+    "songs": ["Jotas de Cáceres", "Canciones de la montaña de Gata"],
+    "famous_people": ["Francisco Pizarro (Trujillo)", "Gonzalo de Sandoval", "Hernando de Soto"],
+    "sayings": ["Cáceres, ciudad monumental", "La Extremadura de los conquistadores"],
+    "historical_facts": ["La Ciudad Monumental de Cáceres (Patrimonio de la Humanidad)", "Trujillo, cuna de los conquistadores", "La dehesa y el cerdo ibérico", "El Yuste, retiro de Carlos V"],
+    "era_facts": {
+      "1950s": ["La dehesa y los pastores trashumantes", "La vida en los pueblos extremeños", "La emigración que empieza"],
+      "1960s": ["La emigración masiva hacia el norte", "Los tractores en el campo extremeño", "La televisión llega tarde a Extremadura"],
+      "1970s": ["La ciudad monumental reconocida", "El regreso de emigrantes", "La transición y los movimientos regionales"]
+    }
+  }
+}

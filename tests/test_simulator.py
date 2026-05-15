@@ -45,7 +45,7 @@ def test_simulator_runs_rules_only():
 def test_env_runs_full_episode():
     env = AlzheimerChatEnv(language="es", max_turns=8, seed=42, patient_mode="rules_only")
     obs, info = env.reset(seed=42)
-    assert obs.shape == (12,)
+    assert obs.shape == (16,)
     agent = ScriptedAgent(seed=42)
     done = False
     while not done:

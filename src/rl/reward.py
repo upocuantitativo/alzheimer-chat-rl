@@ -31,6 +31,12 @@ class RewardConfig:
     inappropriate_penalty: float = 0.8
     short_session_penalty: float = 0.5  # if you close too early
     max_turns: int = 12
+    # Latency / engagement
+    strategy_fit_weight: float = 0.4   # reward for low-latency response
+    silence_penalty: float = 0.5       # penalty per silent turn
+    # Cultural activity engagement
+    cultural_success_bonus: float = 0.6  # extra on top of test_success_bonus
+    procedural_mood_lift: float = 0.3    # mood lift when procedural activity succeeds
 
 
 def compute_reward(
@@ -43,6 +49,11 @@ def compute_reward(
     cfg: RewardConfig,
     closed: bool,
     n_turns: int,
+    *,
+    strategy_fit: float = 0.5,
+    is_silent: bool = False,
+    is_cultural_activity: bool = False,
+    is_procedural: bool = False,
 ) -> tuple[float, dict]:
     """Return (reward, components_dict) for logging."""
     s_before = sim_before
@@ -77,6 +88,17 @@ def compute_reward(
     # Early closure penalty
     if closed and n_turns < 4:
         components["early_close"] = -cfg.short_session_penalty
+
+    # Latency / engagement signals
+    components["strategy_fit"] = cfg.strategy_fit_weight * strategy_fit
+    if is_silent:
+        components["silence"] = -cfg.silence_penalty
+
+    # Cultural activity bonus
+    if is_cultural_activity and test_success is True:
+        components["cultural_engagement"] = cfg.cultural_success_bonus
+        if is_procedural:
+            components["procedural_lift"] = cfg.procedural_mood_lift
 
     # Small per-turn time cost to encourage useful turns
     components["step_cost"] = -0.02

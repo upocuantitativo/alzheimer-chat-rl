@@ -26,6 +26,11 @@ class AgentAction(IntEnum):
     CHANGE_TOPIC = 6        # cambia de tema (utilizar si ansiedad alta)
     SHORT_REASSURE = 7      # frase corta tranquilizadora, baja fatiga
     CLOSE_TURN = 8          # cierra educadamente (sale del entorno)
+    # --- actividades motivadoras (memoria procedural y semántica) ---
+    REFRÁN = 9              # completa el refrán (memoria procedural)
+    CANCIÓN = 10            # completa la canción (memoria procedural)
+    TRIVIA_CULTURAL = 11    # trivia de geografía, historia, gastronomía
+    TRIVIA_DEPORTES = 12    # trivia de fútbol, ciclismo, deporte
 
 
 ACTION_SPACE = list(AgentAction)
@@ -113,5 +118,49 @@ TEMPLATES: dict[AgentAction, ActionTemplate] = {
     AgentAction.CLOSE_TURN: ActionTemplate(
         es=["Ha sido un placer hablar con usted. Hasta la próxima."],
         en=["It's been a pleasure talking with you. Until next time."],
+    ),
+    AgentAction.REFRÁN: ActionTemplate(
+        es=[
+            "Le voy a decir el principio de un refrán, a ver si me lo completa: «{stimulus}»",
+            "¿Sabe usted cómo termina este refrán? «{stimulus}»",
+            "Esto me lo enseñó mi abuela. ¿Cómo seguía? «{stimulus}»",
+        ],
+        en=[
+            "I'll say the beginning of a proverb, see if you can complete it: «{stimulus}»",
+            "Do you know how this saying ends? «{stimulus}»",
+        ],
+    ),
+    AgentAction.CANCIÓN: ActionTemplate(
+        es=[
+            "¿Recuerda esta canción? Cante conmigo: «{stimulus}»",
+            "Una canción que me gusta mucho empieza así: «{stimulus}» ¿Cómo sigue?",
+            "Esto lo cantábamos todos de pequeños: «{stimulus}»",
+        ],
+        en=[
+            "Do you remember this song? Sing with me: «{stimulus}»",
+            "A song I love starts like this: «{stimulus}» How does it go?",
+        ],
+    ),
+    AgentAction.TRIVIA_CULTURAL: ActionTemplate(
+        es=[
+            "Le hago una preguntilla de cultura general: {stimulus}",
+            "A ver si lo sabe: {stimulus}",
+            "Una cosita de cultura: {stimulus}",
+        ],
+        en=[
+            "A little general knowledge question: {stimulus}",
+            "Let's see if you know: {stimulus}",
+        ],
+    ),
+    AgentAction.TRIVIA_DEPORTES: ActionTemplate(
+        es=[
+            "¿Sabe usted de deportes? {stimulus}",
+            "Una pregunta deportiva: {stimulus}",
+            "Hablando de deporte: {stimulus}",
+        ],
+        en=[
+            "Are you a sports fan? {stimulus}",
+            "A sports question: {stimulus}",
+        ],
     ),
 }

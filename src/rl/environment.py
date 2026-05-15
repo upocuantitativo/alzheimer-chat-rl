@@ -1,11 +1,12 @@
 """Gymnasium-style environment wrapping the PatientSimulator.
 
-Observation (vector, len=12):
+Observation (vector, len=16):
     [ mmse_norm, fatigue, anxiety, mood,
       discovery_rate, n_revealed_likes_norm, n_revealed_dislikes_norm,
-      stage_one_hot (5) ]
+      stage_one_hot (5),
+      strategy_fit, engagement_trend, activity_success_rate, silence_streak_norm ]
 
-Action: Discrete(9) — see chatbot.actions.AgentAction
+Action: Discrete(13) — see chatbot.actions.AgentAction
 
 Episode ends on:
     - AgentAction.CLOSE_TURN
@@ -29,11 +30,20 @@ except ImportError:  # pragma: no cover
     gym = object  # type: ignore
 
 from ..chatbot.actions import ACTION_SPACE, AgentAction
+from ..chatbot.activities import ActivityBank
 from ..chatbot.tests import CognitiveTestBank
 from ..patient_simulator import PatientSimulator, CognitiveState
 from ..patient_simulator.cognitive_state import Stage
+from ..signals.interest_tracker import InterestTracker
 from .renderer import render_action
 from .reward import RewardConfig, compute_reward
+
+_CULTURAL_ACTIONS = {
+    AgentAction.REFRÁN,
+    AgentAction.CANCIÓN,
+    AgentAction.TRIVIA_CULTURAL,
+    AgentAction.TRIVIA_DEPORTES,
+}
 
 
 STAGE_ORDER = [Stage.HEALTHY, Stage.MCI, Stage.MILD_AD, Stage.MODERATE_AD, Stage.SEVERE_AD]
@@ -69,13 +79,17 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
         if _HAS_GYM:
             self.action_space = spaces.Discrete(len(ACTION_SPACE))
             self.observation_space = spaces.Box(
-                low=-1.0, high=1.0, shape=(12,), dtype=np.float32
+                low=-1.0, high=1.0, shape=(16,), dtype=np.float32
             )
 
         self.sim: Optional[PatientSimulator] = None
         self.last_test = None
         self.n_turns = 0
         self.transcript: list[dict] = []
+        self.activity_bank: Optional[ActivityBank] = None
+        self.interest_tracker: Optional[InterestTracker] = None
+        self._last_strategy_fit: float = 0.5
+        self._last_is_silent: bool = False
 
     # ------------------------------------------------------------------
     # Gym API
@@ -93,6 +107,10 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
         self.last_test = None
         self.n_turns = 0
         self.transcript = []
+        self.activity_bank = ActivityBank(seed=self._seed)
+        self.interest_tracker = InterestTracker()
+        self._last_strategy_fit = 0.5
+        self._last_is_silent = False
         obs = self._observe()
         info = {
             "patient_profile": self.sim.profile.as_dict(hide_private=True),
@@ -105,12 +123,26 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
         a = AgentAction(int(action))
         state_before = self.sim.state.as_dict()
 
+        # Determine if this is a cultural activity and its procedural flag
+        is_cultural = a in _CULTURAL_ACTIONS
+        trending = self.interest_tracker.trending(3) if self.interest_tracker else []
+
         # Render agent utterance, possibly with a cognitive test
-        utterance, test = render_action(self.sim, a, self.test_bank, self.rng,
-                                        last_test=self.last_test)
+        utterance, test = render_action(
+            self.sim, a, self.test_bank, self.rng,
+            last_test=self.last_test,
+            activity_bank=self.activity_bank,
+            trending_tags=trending,
+        )
+
+        is_procedural = bool(test and test.metadata.get("is_procedural", False))
 
         # Patient responds
-        turn = self.sim.reply(utterance)
+        turn = self.sim.reply(
+            utterance,
+            is_procedural=is_procedural,
+            topic_category=test.domain if test else None,
+        )
 
         # Verify cognitive test if one was issued
         test_success: Optional[bool] = None
@@ -133,6 +165,29 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
         closed = a == AgentAction.CLOSE_TURN
         self.n_turns += 1
 
+        # Update latency / engagement tracking
+        strategy_fit = 1.0 - min(turn.latency_s / 12.0, 1.0)
+        self._last_strategy_fit = strategy_fit
+        self._last_is_silent = turn.is_silent
+
+        # Update interest tracker
+        if self.interest_tracker and test:
+            mood_before = state_before.get("mood", 0.0)
+            mood_after = self.sim.state.mood
+            response_len = len(turn.text.split())
+            self.interest_tracker.update(
+                test.domain,
+                success=bool(test_success),
+                latency_s=turn.latency_s,
+                mood_delta=mood_after - mood_before,
+                response_length=response_len,
+                is_silent=turn.is_silent,
+            )
+            self.interest_tracker.update_anxiety(self.sim.state.anxiety)
+
+        alarms = (self.interest_tracker.check_alarms(self.sim.state)
+                  if self.interest_tracker else [])
+
         reward, components = compute_reward(
             sim_before=state_before,
             sim_after=self.sim,
@@ -143,6 +198,10 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
             cfg=self.reward_config,
             closed=closed,
             n_turns=self.n_turns,
+            strategy_fit=strategy_fit,
+            is_silent=turn.is_silent,
+            is_cultural_activity=is_cultural,
+            is_procedural=is_procedural,
         )
 
         truncated = self.n_turns >= self.max_turns
@@ -157,6 +216,11 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
             test_success=test_success,
             triggered_like=turn.triggered_like,
             triggered_dislike=turn.triggered_dislike,
+            latency_s=turn.latency_s,
+            is_silent=turn.is_silent,
+            strategy_fit=round(strategy_fit, 3),
+            alarms=alarms,
+            engagement=self.interest_tracker.engagement_summary() if self.interest_tracker else {},
         )
         self.transcript.append(info)
 
@@ -181,6 +245,17 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
         total_likes = max(1, len(p.likes))
         total_dislikes = max(1, len(p.dislikes))
 
+        # Engagement signals (new, 4 features)
+        it = self.interest_tracker
+        engagement_trend = 0.5
+        act_success_rate = 0.5
+        silence_streak_norm = 0.0
+        if it and it._history:
+            total = len(it._history)
+            act_success_rate = sum(1 for r in it._history if r.success) / total
+            engagement_trend = max(0.0, min(1.0, (act_success_rate + (1 - s.fatigue)) / 2))
+            silence_streak_norm = min(1.0, it._silence_streak / 5.0)
+
         vec = [
             s.mmse / 30.0,
             s.fatigue,
@@ -190,5 +265,10 @@ class AlzheimerChatEnv(gym.Env if _HAS_GYM else object):
             n_likes / total_likes,
             n_dislikes / total_dislikes,
             *_stage_one_hot(s.stage),
+            # new features
+            self._last_strategy_fit,
+            engagement_trend,
+            act_success_rate,
+            silence_streak_norm,
         ]
         return np.asarray(vec, dtype=np.float32)
