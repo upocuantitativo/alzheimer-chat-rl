@@ -21,6 +21,7 @@ Prototipo de investigación para un sistema de chat dirigido a personas con enfe
 | Generación sintética masiva | ✅ Script CLI |
 | Entrenamiento PPO | ✅ Configurable (Stable-Baselines3) |
 | Demo de chat CLI | ✅ Funcional |
+| Aplicación web (FastAPI + SPA) | ✅ Funcional — `python scripts/run_api.py` |
 | Datos clínicos reales (DementiaBank, ADReSS…) | ⏳ Requieren solicitud manual — ver [`docs/DATA_ACCESS.md`](docs/DATA_ACCESS.md) |
 
 ## Arquitectura
@@ -55,7 +56,31 @@ Prototipo de investigación para un sistema de chat dirigido a personas con enfe
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Quick start
+## Aplicación web
+
+El prototipo incluye una interfaz completa accesible desde el navegador.
+
+**Arrancar (Windows):** doble clic en `run_app.bat` — el navegador se abre solo.
+
+**Arrancar (cualquier OS):**
+```bash
+pip install -r requirements.txt
+python scripts/run_api.py
+```
+
+Una vez en marcha, abre **[http://localhost:8000](http://localhost:8000)** y elige entre las tres interfaces:
+
+| Interfaz | Ruta | Para quién |
+|---|---|---|
+| Sesión de conversación | `/app` | Cuidador o investigador — interacción turno a turno |
+| Dashboard clínico | `/dashboard` | Cuidador — seguimiento de sesiones, alarmas, gráficas |
+| Panel científico | `/science` | Investigador — distribuciones, eficacia de acciones, arquitectura RL |
+
+> La API REST está documentada automáticamente en [http://localhost:8000/docs](http://localhost:8000/docs).
+
+---
+
+## Quick start (CLI)
 
 ```bash
 # 1. Instalar dependencias

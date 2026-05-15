@@ -684,6 +684,11 @@ function alarmText(code) {
   };
   return map[code] || code;
 }
+
+// Auto-navigate based on URL so /dashboard opens the dashboard view directly
+if (window.location.pathname === '/dashboard') {
+  showView('dashboard');
+}
 </script>
 </body>
 </html>
