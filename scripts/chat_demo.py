@@ -34,6 +34,32 @@ from src.rl.renderer import render_action
 from src.signals import ProgressionDetector, extract_features
 
 
+def _load_rag(path: str | None):
+    if path is None:
+        return None
+    from pathlib import Path as _Path
+    idx_dir = _Path(path)
+    if not (idx_dir / "chunks.json").exists():
+        print(f"[RAG] Índice no encontrado en {idx_dir}. "
+              "Ejecuta primero: python scripts/build_rag_index.py\n")
+        return None
+    from src.data.rag_index import RAGIndex
+    print(f"[RAG] Cargando índice desde {idx_dir}…")
+    return RAGIndex.load(idx_dir)
+
+
+def _rag_hint(rag, query: str) -> None:
+    chunks = rag.query(query, k=2)
+    if not chunks:
+        return
+    print()
+    for c in chunks:
+        src = c.source.replace(".pdf", "")
+        snippet = c.text[:160].rstrip()
+        print(f"  [Guía {src}, p.{c.page}] {snippet}…")
+    print()
+
+
 def banner(title: str) -> None:
     bar = "─" * (len(title) + 2)
     print(f"\n┌{bar}┐\n│ {title} │\n└{bar}┘")
@@ -110,6 +136,7 @@ def run_ppo(args) -> int:
 
 
 def run_interactive(args) -> int:
+    rag = _load_rag(getattr(args, "rag", None))
     sim = PatientSimulator(seed=args.seed, mode=args.patient_mode, language=args.language)
     bank = CognitiveTestBank(seed=args.seed)
 
@@ -146,6 +173,8 @@ def run_interactive(args) -> int:
             print(f"    ✓ descubierta filia: {patient_turn.triggered_like}")
         if patient_turn.triggered_dislike:
             print(f"    ⚠ tocada fobia    : {patient_turn.triggered_dislike}")
+        if rag:
+            _rag_hint(rag, patient_turn.text)
         if test is not None:
             result = CognitiveTestBank.evaluate(test, patient_turn.text)
             sim.record_test_outcome(result.success)
@@ -174,6 +203,9 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--patient-mode", default="llm_hybrid",
                     choices=["rules_only", "llm_hybrid", "llm_only"])
+    ap.add_argument("--rag", metavar="INDEX_DIR", default=None,
+                    help="Ruta al índice RAG (p.ej. data/rag_index). "
+                    "Solo activo en modo interactive.")
     args = ap.parse_args()
 
     if args.mode == "interactive":

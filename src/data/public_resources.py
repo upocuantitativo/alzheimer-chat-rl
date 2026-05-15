@@ -27,7 +27,7 @@ PUBLIC_RESOURCES: list[PublicResource] = [
         name="Alzheimer's Association — La comunicación (ES)",
         url="https://www.alz.org/getmedia/4a80e11b-f1df-4972-9323-b97c4359a89d/alzheimers-dementia-communication-spanish-ts.pdf",
         description="Guía breve sobre cómo comunicarse con una persona con Alzheimer.",
-        filename="alz_association_comunicacion_ES.pdf",
+        filename="alzheimers-dementia-communication-spanish-ts.pdf",
         license_note="© Alzheimer's Association — redistribución informativa.",
     ),
     PublicResource(

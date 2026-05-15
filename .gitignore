@@ -36,6 +36,7 @@ tb_logs/
 wandb/
 
 # Data — never commit clinical or potentially sensitive data
+data/rag_index/
 data/clinical/
 data/dementiabank/
 data/adress/
