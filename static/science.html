@@ -40,6 +40,8 @@
     header .ver { font-size: 10px; padding: 2px 8px; border-radius: 99px; background: rgba(0,212,255,.1); color: var(--cyan); border: 1px solid rgba(0,212,255,.25); font-family: var(--mono); }
     header nav a { color: var(--muted); text-decoration: none; font-size: 12px; padding: 4px 10px; border-radius: 6px; transition: all .15s; }
     header nav a:hover { color: var(--text); background: var(--surface2); }
+    header nav a.home { border: 1px solid var(--border); padding: 4px 12px; }
+    header nav a.home:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,.07); }
     #refresh-time { font-family: var(--mono); font-size: 11px; color: var(--cyan); }
 
     /* ── Layout ── */
@@ -108,7 +110,7 @@
   <h1>Alzheimer Chat-RL &nbsp;/&nbsp; Panel Científico</h1>
   <span class="ver">v0.2.0</span>
   <nav>
-    <a href="/">Inicio</a>
+    <a class="home" href="/">&#8962; Inicio</a>
     <a href="/app">Conversación</a>
     <a href="/dashboard">Dashboard clínico</a>
   </nav>

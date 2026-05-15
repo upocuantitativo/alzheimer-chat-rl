@@ -23,6 +23,8 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24
 .tab{padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--text2);border:1px solid transparent;transition:.15s}
 .tab:hover{color:var(--text);background:var(--surface2)}
 .tab.active{color:var(--text);background:var(--accent);border-color:var(--accent)}
+.home-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:.82rem;color:var(--text2);border:1px solid var(--border);background:transparent;text-decoration:none;transition:.15s;cursor:pointer}
+.home-btn:hover{color:var(--text);border-color:var(--accent);background:var(--surface2)}
 
 /* ── Views ─────────────────────────────────────────────────── */
 .view{display:none;flex:1;overflow:hidden}
@@ -160,6 +162,7 @@ input:focus,select:focus{border-color:var(--accent)}
   <button class="tab active" onclick="showView('setup')">Nueva sesión</button>
   <button class="tab" id="tab-chat" onclick="showView('chat')">Chat</button>
   <button class="tab" onclick="showView('dashboard')">Dashboard</button>
+  <a class="home-btn" href="/">&#8962; Inicio</a>
 </nav>
 
 <!-- ══════════════════════════════
