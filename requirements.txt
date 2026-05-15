@@ -36,5 +36,10 @@ click>=8.1
 # transformers>=4.40
 # accelerate>=0.30
 
+# Web API
+fastapi>=0.111
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+
 # Dev
 pytest>=7.4
