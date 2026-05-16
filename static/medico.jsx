@@ -16,6 +16,7 @@ const MedicoView = () => {
     { date: '14 may', author: 'Dr. Vega', text: 'Cambio de pauta: introducir música pre-test para reducir ansiedad. Revisar en 2 semanas.' },
     { date: '07 may', author: 'Dr. Vega', text: 'Caída MMSE −2 confirmada. Solicitar valoración neurológica complementaria.' },
   ]);
+  const [topNav, setTopNav] = React.useState('pacientes');
 
   const p = patients.find(x => x.id === selectedId);
   const mmseRef = React.useRef(null);
@@ -98,10 +99,11 @@ const MedicoView = () => {
           </div>
         </div>
         <div style={medicoStyles.navTabs}>
-          <span style={{ ...medicoStyles.navTab, ...medicoStyles.navTabActive }}>Pacientes</span>
-          <span style={medicoStyles.navTab}>Cohortes</span>
-          <span style={medicoStyles.navTab}>Informes</span>
-          <span style={medicoStyles.navTab}>Configuración</span>
+          {[['pacientes','Pacientes'],['cohortes','Cohortes'],['informes','Informes'],['config','Configuración']].map(([k,l]) => (
+            <span key={k}
+              style={{ ...medicoStyles.navTab, ...(topNav===k ? medicoStyles.navTabActive : {}), cursor:'pointer' }}
+              onClick={() => setTopNav(k)}>{l}</span>
+          ))}
         </div>
         <div style={medicoStyles.navRight}>
           <button style={medicoStyles.iconBtnGhost} onClick={() => setShowAlerts(true)} title="Umbrales de alerta">
@@ -112,7 +114,8 @@ const MedicoView = () => {
         </div>
       </div>
 
-      <div style={medicoStyles.body}>
+      {topNav !== 'pacientes' && <TopNavView which={topNav} patients={patients} thresholds={thresholds} setThresholds={setThresholds}/>}
+      <div style={{ ...medicoStyles.body, display: topNav === 'pacientes' ? 'flex' : 'none' }}>
         {/* ── Left rail: patient triage list ── */}
         <div style={medicoStyles.patientsRail}>
           <div style={medicoStyles.railHeader}>
@@ -652,6 +655,178 @@ const medicoStyles = {
   modalHeader: { display:'flex', justifyContent:'space-between', alignItems:'flex-start' },
   modalTitle: { fontSize: 16, fontWeight: 600, color:'#1f2937' },
   modalClose: { width: 28, height: 28, border:'none', background:'#f7f7f5', borderRadius: 6, fontSize: 18, color:'#7a8694', cursor:'pointer' },
+};
+
+// ─── Top-nav secondary views ────────────────────────────────────
+const TopNavView = ({ which, patients, thresholds, setThresholds }) => {
+  const s = medicoStyles;
+
+  if (which === 'cohortes') {
+    const stages = [
+      { key: 'HEALTHY',     label: 'Sano',        color: '#0d7c80' },
+      { key: 'MCI',         label: 'DCL',          color: '#a87d00' },
+      { key: 'MILD_AD',     label: 'EA leve',      color: '#d97706' },
+      { key: 'MODERATE_AD', label: 'EA moderada',  color: '#c0362c' },
+    ];
+    return (
+      <div style={{ flex:1, overflowY:'auto', padding: 22 }}>
+        <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}>Cohortes</div>
+        <div style={{ fontSize: 12, color:'#7a8694', marginBottom: 18 }}>Agrupación automática por estadio clínico · datos en tiempo real</div>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap: 14, marginBottom: 22 }}>
+          {stages.map(({ key, label, color }) => {
+            const group = patients.filter(p => p.stage === key);
+            const avgMmse = group.length ? Math.round(group.reduce((a,p)=>a+p.mmse,0)/group.length) : '—';
+            const totalAlarms = group.reduce((a,p)=>a+p.alarms,0);
+            return (
+              <div key={key} style={{ ...s.card, borderTop:`3px solid ${color}` }}>
+                <div style={{ fontSize: 11, fontWeight:600, color, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>{label}</div>
+                <div style={{ fontSize: 28, fontWeight:700, color:'#1f2937', fontVariantNumeric:'tabular-nums' }}>{group.length}</div>
+                <div style={{ fontSize: 11, color:'#7a8694', marginTop:2 }}>pacientes</div>
+                <div style={{ marginTop:12, display:'flex', justifyContent:'space-between', fontSize:12 }}>
+                  <div><span style={{ color:'#7a8694' }}>MMSE medio </span><b style={{ color:'#1f2937' }}>{avgMmse}</b></div>
+                  <div><span style={{ color:'#7a8694' }}>Alarmas </span><b style={{ color: totalAlarms > 0 ? '#c0362c':'#0d7c80' }}>{totalAlarms}</b></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={s.card}>
+          <div style={s.cardTitle}>Pacientes por cohorte</div>
+          <table style={{ ...s.table, marginTop:10 }}>
+            <thead>
+              <tr>
+                <th style={s.th}>Paciente</th><th style={s.th}>Estadio</th>
+                <th style={s.th}>Ciudad</th><th style={s.th}>MMSE</th>
+                <th style={s.th}>Sesiones/mes</th><th style={s.th}>Alarmas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...patients].sort((a,b)=>['HEALTHY','MCI','MILD_AD','MODERATE_AD'].indexOf(a.stage)-['HEALTHY','MCI','MILD_AD','MODERATE_AD'].indexOf(b.stage)).map(p=>(
+                <tr key={p.id}>
+                  <td style={s.td}>{p.name}</td>
+                  <td style={s.td}><span style={{ fontSize:10, padding:'2px 7px', borderRadius:4,
+                    background: p.urgency==='critica'?'#fef2f1':p.urgency==='alta'?'#fef6ec':p.urgency==='media'?'#fffbed':'#eef7f5',
+                    color: p.urgency==='critica'?'#c0362c':p.urgency==='alta'?'#b45309':p.urgency==='media'?'#7c5800':'#0d6e72',
+                    fontWeight:600 }}>{p.stageLabel}</span></td>
+                  <td style={s.td}>{p.city}</td>
+                  <td style={{ ...s.td, fontVariantNumeric:'tabular-nums', fontWeight:600 }}>{p.mmse}</td>
+                  <td style={{ ...s.td, fontVariantNumeric:'tabular-nums' }}>{p.sessionsThisMonth}</td>
+                  <td style={{ ...s.td, fontVariantNumeric:'tabular-nums', color: p.alarms>0?'#c0362c':'#0d7c80', fontWeight:p.alarms>0?600:400 }}>{p.alarms}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  if (which === 'informes') {
+    const reports = [
+      { date:'14 may 2026', patient:'Antonio Heredia Núñez', type:'Sesión individual', turns:9, mmse:16, status:'Listo' },
+      { date:'14 may 2026', patient:'María Dolores Ramírez', type:'Sesión individual', turns:12, mmse:22, status:'Listo' },
+      { date:'12 may 2026', patient:'Juan Manuel Espinosa',  type:'Sesión individual', turns:10, mmse:20, status:'Listo' },
+      { date:'09 may 2026', patient:'Pilar Cebrián Vidal',   type:'Informe mensual',   turns:48, mmse:26, status:'Listo' },
+      { date:'05 may 2026', patient:'Encarnación Ortiz Pino',type:'Sesión individual', turns:8,  mmse:25, status:'Listo' },
+      { date:'28 abr 2026', patient:'Francisco Javier Lozano',type:'Informe mensual',  turns:16, mmse:29, status:'Listo' },
+    ];
+    return (
+      <div style={{ flex:1, overflowY:'auto', padding: 22 }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:18 }}>
+          <div>
+            <div style={{ fontSize:18, fontWeight:600, marginBottom:4 }}>Informes</div>
+            <div style={{ fontSize:12, color:'#7a8694' }}>Exportaciones y resúmenes de sesión · últimos 30 días</div>
+          </div>
+          <button style={s.btnPrimary}>+ Generar informe</button>
+        </div>
+        <div style={s.card}>
+          <table style={s.table}>
+            <thead>
+              <tr>
+                <th style={s.th}>Fecha</th><th style={s.th}>Paciente</th>
+                <th style={s.th}>Tipo</th><th style={s.th}>Turnos</th>
+                <th style={s.th}>MMSE</th><th style={s.th}>Estado</th>
+                <th style={s.th}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {reports.map((r,i)=>(
+                <tr key={i}>
+                  <td style={{ ...s.td, color:'#7a8694', fontFamily:'IBM Plex Mono,monospace', fontSize:11 }}>{r.date}</td>
+                  <td style={{ ...s.td, fontWeight:500 }}>{r.patient}</td>
+                  <td style={s.td}>{r.type}</td>
+                  <td style={{ ...s.td, fontVariantNumeric:'tabular-nums' }}>{r.turns}</td>
+                  <td style={{ ...s.td, fontVariantNumeric:'tabular-nums', fontWeight:600 }}>{r.mmse}</td>
+                  <td style={s.td}><span style={{ fontSize:10, padding:'2px 8px', borderRadius:4, background:'#eef7f5', color:'#0d6e72', fontWeight:600 }}>{r.status}</span></td>
+                  <td style={s.td}><button style={s.btnGhost}><SvgDownload/> PDF</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  if (which === 'config') {
+    return (
+      <div style={{ flex:1, overflowY:'auto', padding: 22, maxWidth: 800 }}>
+        <div style={{ fontSize:18, fontWeight:600, marginBottom:18 }}>Configuración</div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+          <div style={s.card}>
+            <div style={s.cardTitle}>Perfil clínico</div>
+            <div style={{ marginTop:14, display:'flex', flexDirection:'column', gap:10 }}>
+              {[['Nombre completo','Dr. Antonio Vega Morales'],['Especialidad','Neurología · Deterioro cognitivo'],['Centro','Hospital Virgen del Rocío · Sevilla'],['Email','a.vega@hvrocio.es']].map(([l,v])=>(
+                <div key={l}>
+                  <div style={{ fontSize:11, color:'#7a8694', marginBottom:3 }}>{l}</div>
+                  <div style={{ padding:'8px 10px', border:'1px solid #e5e7eb', borderRadius:6, fontSize:13, color:'#1f2937', background:'#fafaf8' }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={s.card}>
+            <div style={s.cardTitle}>Notificaciones</div>
+            <div style={{ marginTop:14, display:'flex', flexDirection:'column', gap:12 }}>
+              {[['Alarma crítica en sesión','Siempre',true],['Caída MMSE ≥ 2 puntos','Email + app',true],['Resumen diario de cohorte','Email',true],['Fin de sesión sin incidencia','Desactivado',false]].map(([l,v,on])=>(
+                <div key={l} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px 0', borderBottom:'1px solid #f1f3f5' }}>
+                  <div>
+                    <div style={{ fontSize:13, color:'#1f2937', fontWeight:500 }}>{l}</div>
+                    <div style={{ fontSize:11, color:'#7a8694', marginTop:2 }}>{v}</div>
+                  </div>
+                  <div style={{ width:36, height:20, borderRadius:10, background:on?'#0d5b75':'#e5e7eb', position:'relative', cursor:'pointer', flexShrink:0 }}>
+                    <div style={{ position:'absolute', top:2, left:on?18:2, width:16, height:16, borderRadius:'50%', background:'#fff', transition:'left .15s' }}/>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ ...s.card, gridColumn:'1/-1' }}>
+            <div style={s.cardTitle}>Umbrales de alerta</div>
+            <div style={s.cardSub}>Disparan alarmas en el panel y notifican al cuidador asignado</div>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:18, marginTop:16 }}>
+              <ThresholdField label="Caída MMSE en 4 sesiones" unit="puntos"
+                value={thresholds.mmseDrop} min={1} max={8}
+                onChange={v => setThresholds({...thresholds, mmseDrop: v})}/>
+              <ThresholdField label="Ansiedad sostenida" unit="%"
+                value={thresholds.anxiety} min={40} max={95}
+                onChange={v => setThresholds({...thresholds, anxiety: v})}/>
+              <ThresholdField label="Racha de silencio" unit="turnos seguidos"
+                value={thresholds.silenceStreak} min={1} max={8}
+                onChange={v => setThresholds({...thresholds, silenceStreak: v})}/>
+              <ThresholdField label="Latencia media de sesión" unit="segundos"
+                value={thresholds.latency} min={5} max={25}
+                onChange={v => setThresholds({...thresholds, latency: v})}/>
+            </div>
+            <div style={{ display:'flex', justifyContent:'flex-end', marginTop:16 }}>
+              <button style={s.btnPrimary}>Guardar cambios</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 window.MedicoView = MedicoView;
