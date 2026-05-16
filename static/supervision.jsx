@@ -134,7 +134,12 @@ const SupervisionView = () => {
       {/* ── Top nav ── */}
       <div style={ss.topnav}>
         <div style={ss.brand}>
-          <div style={ss.brandMark}>♥</div>
+          <div style={ss.brandMark}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
           <div>
             <div style={ss.brandTitle}>Alzheimer Chat-RL</div>
             <div style={ss.brandSub}>Supervisión familiar · {patient.caregiver}</div>
