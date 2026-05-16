@@ -162,7 +162,7 @@ def app_ui():
 
 @app.get("/dashboard", response_class=FileResponse)
 def dashboard():
-    return FileResponse(str(STATIC / "index.html"))
+    return FileResponse(str(STATIC / "dashboard.html"))
 
 
 @app.get("/science", response_class=FileResponse)
