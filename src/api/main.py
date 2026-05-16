@@ -170,6 +170,11 @@ def science():
     return FileResponse(str(STATIC / "science.html"))
 
 
+@app.get("/supervise", response_class=FileResponse)
+def supervise():
+    return FileResponse(str(STATIC / "supervise.html"))
+
+
 # ─── Session endpoints ────────────────────────────────────────────
 
 @app.post("/api/sessions", response_model=dict)

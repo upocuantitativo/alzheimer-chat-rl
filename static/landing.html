@@ -86,12 +86,15 @@
   /* Cards */
   .cards {
     display: grid;
-    grid-template-columns: repeat(3, 320px);
+    grid-template-columns: repeat(4, 280px);
     gap: 20px;
     margin-top: 64px;
     margin-bottom: 48px;
   }
-  @media (max-width: 1080px) {
+  @media (max-width: 1240px) {
+    .cards { grid-template-columns: repeat(2, 320px); }
+  }
+  @media (max-width: 700px) {
     .cards { grid-template-columns: 320px; }
   }
 
@@ -117,6 +120,7 @@
   .card.mayor    .card-stripe { background: linear-gradient(90deg, #c4632b, #d4a04a); }
   .card.medico   .card-stripe { background: linear-gradient(90deg, #0d5b75, #0d7c80); }
   .card.science  .card-stripe { background: linear-gradient(90deg, #06b6d4, #84cc16); }
+  .card.familiar .card-stripe { background: linear-gradient(90deg, #059669, #34d399); }
 
   .card-audience {
     font-size: 10px;
@@ -128,6 +132,7 @@
   .mayor   .card-audience { color: #b45309; }
   .medico  .card-audience { color: #0d5b75; }
   .science .card-audience { color: #0d7c80; }
+  .familiar .card-audience { color: #059669; }
 
   .card-illus {
     height: 110px;
@@ -138,6 +143,7 @@
   .mayor   .card-illus { background: #fbf1e3; }
   .medico  .card-illus { background: #eef6f6; }
   .science .card-illus { background: #0f1828; }
+  .familiar .card-illus { background: #f0fdf4; }
 
   .card-title {
     font-family: 'Lexend', sans-serif;
@@ -175,6 +181,7 @@
   .mayor   .card-features li::before { background: #c4632b; }
   .medico  .card-features li::before { background: #0d5b75; }
   .science .card-features li::before { background: #06b6d4; }
+  .familiar .card-features li::before { background: #059669; }
 
   .card-cta {
     display: inline-flex; align-items: center; gap: 8px;
@@ -187,6 +194,7 @@
   .mayor   .card-cta { background: #c4632b; }
   .medico  .card-cta { background: #0d5b75; }
   .science .card-cta { background: #0d2236; }
+  .familiar .card-cta { background: #059669; }
 
   /* Footer */
   .footer {
@@ -318,6 +326,33 @@
         <li>Filtros por estadio · modo · modelo</li>
       </ul>
       <span class="card-cta">Abrir telemetría →</span>
+    </a>
+
+    <a class="card familiar" href="/supervise">
+      <span class="card-stripe"></span>
+      <div class="card-illus">
+        <svg width="140" height="84" viewBox="0 0 140 84" fill="none">
+          <circle cx="70" cy="38" r="22" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1.5"/>
+          <circle cx="70" cy="32" r="8" fill="#059669"/>
+          <path d="M54 54c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#059669" opacity=".3"/>
+          <circle cx="38" cy="52" r="6" fill="#34d399" opacity=".6"/>
+          <circle cx="102" cy="52" r="6" fill="#34d399" opacity=".6"/>
+          <path d="M44 52c0-6.6 5.4-12 12-12" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <path d="M96 52c0-6.6-5.4-12-12-12" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <rect x="58" y="64" width="24" height="3" rx="1.5" fill="#a7f3d0"/>
+          <rect x="50" y="70" width="40" height="2" rx="1" fill="#a7f3d0" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="card-audience">Para el familiar</div>
+      <div class="card-title">Supervisión</div>
+      <div class="card-desc">Seguimiento sencillo del estado de tu familiar: alertas en lenguaje claro, evolución y resumen de cada sesión.</div>
+      <ul class="card-features">
+        <li>Estado general con semáforo visual</li>
+        <li>Alertas traducidas a lenguaje llano</li>
+        <li>Evolución del bienestar semana a semana</li>
+        <li>Resumen de las últimas conversaciones</li>
+      </ul>
+      <span class="card-cta">Ver supervisión →</span>
     </a>
 
   </div>
