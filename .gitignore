@@ -71,3 +71,6 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Browser automation artifacts
+.playwright-mcp/
