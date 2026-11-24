@@ -1,0 +1,11 @@
+/* Correcciones de legibilidad (impeccable detect), 2026-11-24. Solo color y tamaño de letra.
+   Para deshacerlas: quitar el <link> a este fichero en el HTML. */
+a.card.familiar > div.card-audience { color: #04825b !important; font-size: 12px !important; }
+a.card.familiar > span.card-cta { color: #191919 !important; }
+a.card.mayor > div.card-audience { font-size: 12px !important; }
+a.card.mayor > span.card-cta { color: #0f0f0f !important; }
+a.card.medico > div.card-audience { font-size: 12px !important; }
+a.card.science > div.card-audience { font-size: 12px !important; }
+div.brand-sub { color: #7b6c50 !important; }
+footer.footer > span { color: #776a4e !important; }
+span.topbar-meta { color: #7b6c50 !important; }
